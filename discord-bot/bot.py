@@ -1,10 +1,23 @@
 import os
+import json
+from pathlib import Path
+
 import discord
 from discord import app_commands
 from discord.ext import commands
 
-TOKEN = os.getenv("DISCORD_TOKEN")
-GUILD_ID = os.getenv("DISCORD_GUILD_ID")
+# Secret config stays on the host outside the Git-synced discord-bot folder.
+CONFIG_PATH = Path("/home/container/private_config.json")
+if CONFIG_PATH.exists():
+    try:
+        private_config = json.loads(CONFIG_PATH.read_text(encoding="utf-8"))
+    except (json.JSONDecodeError, OSError) as exc:
+        raise RuntimeError("No se pudo leer private_config.json") from exc
+else:
+    private_config = {}
+
+TOKEN = os.getenv("DISCORD_TOKEN") or private_config.get("DISCORD_TOKEN")
+GUILD_ID = os.getenv("DISCORD_GUILD_ID") or private_config.get("DISCORD_GUILD_ID")
 
 intents = discord.Intents.default()
 bot = commands.Bot(command_prefix="!", intents=intents)
@@ -38,6 +51,7 @@ class ConfirmDelete(discord.ui.View):
             await interaction.response.edit_message(
                 content="Ese canal ya no existe.", view=None
             )
+
 
     @discord.ui.button(label="Cancelar", style=discord.ButtonStyle.secondary)
     async def cancel(self, interaction: discord.Interaction, button: discord.ui.Button):
@@ -124,6 +138,6 @@ async def on_app_command_error(interaction: discord.Interaction, error: app_comm
 
 
 if not TOKEN:
-    raise RuntimeError("Falta configurar la variable DISCORD_TOKEN en el entorno.")
+    raise RuntimeError("Falta configurar DISCORD_TOKEN en private_config.json o en variables de entorno.")
 
 bot.run(TOKEN)

@@ -1,0 +1,11 @@
+services:
+  - type: worker
+    name: zentrika-discord-bot
+    runtime: python
+    buildCommand: pip install -r discord-bot/requirements.txt
+    startCommand: python discord-bot/bot.py
+    envVars:
+      - key: DISCORD_TOKEN
+        sync: false
+      - key: DISCORD_GUILD_ID
+        sync: false

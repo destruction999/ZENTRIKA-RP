@@ -1,0 +1,4 @@
+-- ZENTRIKA-RP migration baseline marker.
+-- This intentionally performs no schema changes.
+-- The migration ledger is created by database/central/00_migration_ledger.sql.
+-- Future migrations should be numbered, reviewed, backed up, and idempotent when possible.

@@ -1,0 +1,32 @@
+# Secretos y configuración local
+server.cfg
+server.cfg.*
+!.example
+.env
+.env.*
+*.key
+*.pem
+*.p12
+*.pfx
+secrets/
+credentials/
+
+# Datos y temporales de servidor
+cache/
+server-cache/
+server-cache-priv/
+crashes/
+logs/
+txData/
+*.log
+
+# Respaldos y volcados de base de datos
+*.sql.gz
+*.dump
+*.bak
+database/backups/*
+!database/backups/.gitkeep
+
+# Archivos temporales de Windows
+Thumbs.db
+.DS_Store

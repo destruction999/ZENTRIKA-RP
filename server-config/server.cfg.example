@@ -1,0 +1,23 @@
+# ZENTRIKA RP - plantilla server.cfg
+# Copia a server.cfg en tu host y rellena las credenciales allí.
+sv_hostname "ZENTRIKA RP | Roleplay"
+sets sv_projectName "ZENTRIKA RP"
+sets sv_projectDesc "Servidor roleplay ESX Legacy"
+
+sv_licenseKey "PON_AQUI_TU_CFX_LICENSE_KEY"
+set mysql_connection_string "mysql://USUARIO:CONTRASENA@HOST/zentirka_rp?charset=utf8mb4"
+setr esx:locale "es"
+
+# Dependencias base: respeta el orden y los nombres reales de tus carpetas.
+ensure oxmysql
+ensure ox_lib
+ensure es_extended
+ensure ox_inventory
+ensure ox_target
+ensure pma-voice
+
+# Inicia aquí esx_addonaccount/esx_addoninventory/esx_datastore/esx_society
+# antes de los trabajos que los necesitan. No dupliques ensures por carpeta
+# y por recurso individual.
+# No inicies esx_policejob junto con FRKN Police Job.
+# BabloBossMenu requiere ESX y dependencias de sociedad antes de iniciarse.

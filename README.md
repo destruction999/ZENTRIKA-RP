@@ -1,16 +1,24 @@
 # ZENTRIKA RP
 
-Repositorio de organización e instalación del servidor FiveM ESX Legacy.
+Repositorio de instalación y desarrollo del servidor FiveM **ZENTRIKA RP**.
 
-## Estructura
+## Base técnica
+- ESX Legacy 1.16.3
+- oxmysql, ox_lib, ox_inventory y ox_target
+- pma-voice
+- BabloBossMenu como menú de jefe unificado (requiere prueba funcional en servidor)
 
-- `01_RECIPE/`: receta de instalación para txAdmin.
-- `02_DATABASE/`: instrucciones y archivos SQL seleccionados.
-- `03_DOCUMENTACION/`: guías de instalación, orden de inicio y mantenimiento.
-- `04_RESPALDOS/`: documentación de respaldos.
+## Carpetas
+- `database/`: creación de base de datos nueva e instrucciones SQL.
+- `docs/`: instalación desde cero, GitHub y mantenimiento.
+- `resources/`: recursos por categorías.
+- `server-config/`: plantilla de configuración; no contiene claves reales.
 
-## Estado
+## Instalación
+Empieza por [Instalación desde cero](docs/INSTALACION_DESDE_CERO.md) y sigue [la guía de base de datos](database/README.md).
 
-Estructura inicial en preparación. La receta ejecutable y los SQL se incorporarán después de verificar los archivos fuente y publicar los paquetes grandes como assets de GitHub Releases.
+## Paquete de recursos
+El ZIP modificado pesa 195,177,848 bytes y se dividió localmente en nueve fragmentos de máximo 24,000,000 bytes. Consulta [la guía de fragmentos](docs/GITHUB_PARTES.md). **Los fragmentos todavía no se han subido a GitHub**; deben cargarse en la interfaz web o mediante Git LFS.
 
-**Seguridad:** no publiques claves, contraseñas, tokens, datos reales de jugadores ni recursos de terceros sin permiso de redistribución.
+## Seguridad y redistribución
+No publiques claves, contraseñas, tokens, datos de jugadores ni archivos de configuración reales. Verifica las licencias y permisos de redistribución de recursos de terceros antes de hacer público el paquete. Usa `.gitignore` y guarda secretos solo en el servidor.

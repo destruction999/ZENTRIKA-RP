@@ -11,12 +11,12 @@ $env:MYSQL_PWD = $env:DB_PASSWORD
 $argsMysql = @("--host=$DbHost", "--port=$DbPort", "--user=$DbUser", "--database=$DbName", "--default-character-set=utf8mb4")
 & $MysqlExe @argsMysql < "database/central/00_migration_ledger.sql"
 if ($LASTEXITCODE -ne 0) { throw "Could not create migration ledger." }
-Get-ChildItem "database/migrations" -Filter "[0-9]*.sql" | Sort-Object Name | ForEach-Object {
-  $file = $_
+$migrationFiles = Get-ChildItem "database/migrations" -Filter "[0-9]*.sql" | Sort-Object Name
+foreach ($file in $migrationFiles) {
   $migration = $file.Name.Replace("'", "''")
   $count = & $MysqlExe @argsMysql --batch --skip-column-names -e "SELECT COUNT(*) FROM zentirka_rp_migrations WHERE migration='$migration';"
   if ($LASTEXITCODE -ne 0) { throw "Could not check migration ledger for $migration" }
-  if ($count.Trim() -eq "1") { Write-Host "SKIP already applied: $($file.Name)"; return }
+  if ($count.Trim() -eq "1") { Write-Host "SKIP already applied: $($file.Name)"; continue }
   Write-Host "Applying: $($file.Name)"
   & $MysqlExe @argsMysql < $file.FullName
   if ($LASTEXITCODE -ne 0) { throw "Migration failed: $($file.Name). Ledger was not updated." }
